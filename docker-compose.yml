@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: exam_app_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: exam_app
+      POSTGRES_USER: exam_user
+      POSTGRES_PASSWORD: exam_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - exam_app_pgdata:/var/lib/postgresql/data
+      - ./database:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U exam_user -d exam_app"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  exam_app_pgdata:
