@@ -13,16 +13,15 @@ function getId(value: string): number {
 
 export const examController = {
 
-  // ===== ADMIN =====
+  
 
-  // GET /exams
   async list(req: Request, res: Response): Promise<void> {
     const exams = await examService.listExams();
 
     res.status(200).json(exams);
   },
 
-  // GET /exams/:id
+  
   async getOne(req: Request, res: Response): Promise<void> {
     const id = getId(req.params.id);
 
@@ -31,7 +30,7 @@ export const examController = {
     res.status(200).json(exam);
   },
 
-  // POST /exams
+  
   async create(req: Request, res: Response): Promise<void> {
 
     const courseId = req.body.courseId;
@@ -53,7 +52,7 @@ export const examController = {
     res.status(201).json(exam);
   },
 
-  // PUT /exams/:id
+  
   async update(req: Request, res: Response): Promise<void> {
 
     const id = getId(req.params.id);
@@ -71,7 +70,7 @@ export const examController = {
     res.status(200).json(exam);
   },
 
-  // DELETE /exams/:id
+  
   async remove(req: Request, res: Response): Promise<void> {
 
     const id = getId(req.params.id);
@@ -82,10 +81,8 @@ export const examController = {
   },
 
 
-  // ===== ÉTUDIANT =====
-
-  // GET /exams/available
-  async listAvailableForStudent(
+  
+    async listAvailableForStudent(
     req: Request,
     res: Response
   ): Promise<void> {
@@ -98,7 +95,7 @@ export const examController = {
     res.status(200).json(exams);
   },
 
-  // GET /exams/:id/student
+  
   async getForStudent(
     req: Request,
     res: Response
@@ -113,7 +110,7 @@ export const examController = {
     res.status(200).json(exam);
   },
 
-  // POST /exams/:id/submit
+  
   async submit(
     req: Request,
     res: Response
