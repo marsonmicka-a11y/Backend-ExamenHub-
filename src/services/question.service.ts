@@ -5,10 +5,8 @@ import { examRepository } from "../repositories/exam.repository";
 import { ApiError } from "../middlewares/error.middleware";
 
 
-// Vérifier les choix d'une question
 function validateChoices(choices: any[]) {
 
-  // Il faut entre 2 et 6 choix
   if (choices.length < 2 || choices.length > 6) {
     throw new ApiError(
       400,
@@ -16,7 +14,6 @@ function validateChoices(choices: any[]) {
     );
   }
 
-  // Il faut exactement 1 bonne réponse
   const correct = choices.filter(c => c.isCorrect);
 
   if (correct.length !== 1) {
@@ -26,7 +23,6 @@ function validateChoices(choices: any[]) {
     );
   }
 
-  // Chaque choix doit avoir un texte
   for (const choice of choices) {
     if (!choice.label) {
       throw new ApiError(
@@ -38,7 +34,6 @@ function validateChoices(choices: any[]) {
 }
 
 
-// Vérifier que l'examen existe
 async function checkExam(examId: number) {
 
   const exam = await examRepository.findById(examId);
@@ -54,7 +49,6 @@ async function checkExam(examId: number) {
 }
 
 
-// Vérifier que l'examen n'est pas encore utilisé
 async function checkExamNotLocked(examId: number) {
 
   const count = await examRepository.countAttempts(examId);
@@ -71,9 +65,6 @@ async function checkExamNotLocked(examId: number) {
 export const questionService = {
 
 
-  // =========================
-  // AFFICHER LES QUESTIONS
-  // =========================
 
   async listQuestions(examId: number) {
 
@@ -97,9 +88,6 @@ export const questionService = {
   },
 
 
-  // =========================
-  // UNE QUESTION
-  // =========================
 
   async getQuestion(id: number) {
 
@@ -123,13 +111,9 @@ export const questionService = {
   },
 
 
-  // =========================
-  // CRÉER UNE QUESTION
-  // =========================
 
   async createQuestion(data: any) {
 
-    // Vérifier l'énoncé
     if (!data.statement) {
       throw new ApiError(
         400,
@@ -137,20 +121,15 @@ export const questionService = {
       );
     }
 
-    // Vérifier les choix
     validateChoices(data.choices);
 
-    // Vérifier l'examen
     await checkExam(data.examId);
 
-    // Vérifier que l'examen est modifiable
     await checkExamNotLocked(data.examId);
 
 
-    // Transaction
     return withTransaction(async client => {
 
-      // Créer la question
       const question =
         await questionRepository.create(
           {
@@ -162,7 +141,6 @@ export const questionService = {
         );
 
 
-      // Créer les choix
       const choices =
         await choiceRepository.createMany(
           question.id,
@@ -179,13 +157,9 @@ export const questionService = {
   },
 
 
-  // =========================
-  // MODIFIER UNE QUESTION
-  // =========================
 
   async updateQuestion(id: number, data: any) {
 
-    // Chercher la question
     const question =
       await questionRepository.findById(id);
 
@@ -196,16 +170,13 @@ export const questionService = {
       );
     }
 
-    // Vérifier les choix
     validateChoices(data.choices);
 
-    // Vérifier que l'examen est modifiable
     await checkExamNotLocked(question.exam_id);
 
 
     return withTransaction(async client => {
 
-      // Modifier la question
       const updated =
         await questionRepository.update(
           id,
@@ -217,14 +188,12 @@ export const questionService = {
         );
 
 
-      // Supprimer les anciens choix
       await choiceRepository.deleteByQuestion(
         id,
         client
       );
 
 
-      // Ajouter les nouveaux choix
       const choices =
         await choiceRepository.createMany(
           id,
@@ -241,9 +210,6 @@ export const questionService = {
   },
 
 
-  // =========================
-  // SUPPRIMER UNE QUESTION
-  // =========================
 
   async deleteQuestion(id: number) {
 
@@ -257,7 +223,6 @@ export const questionService = {
       );
     }
 
-    // Vérifier que l'examen n'est pas verrouillé
     await checkExamNotLocked(
       question.exam_id
     );
