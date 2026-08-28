@@ -227,7 +227,6 @@ export const questionService = {
       question.exam_id
     );
 
-    // Supprimer
     await questionRepository.delete(id);
   }
 
