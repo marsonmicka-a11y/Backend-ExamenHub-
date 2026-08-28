@@ -16,9 +16,6 @@ import { env } from "./config/env";
 const app = express();
 
 
-// ========================
-// CONFIGURATION
-// ========================
 
 app.use(cors());
 app.use(express.json());

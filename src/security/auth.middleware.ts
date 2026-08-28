@@ -3,7 +3,6 @@ import { verifyToken, TokenPayload } from "./jwt";
 import { ApiError } from "../middlewares/error.middleware";
 
 declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Express {
     interface Request {
       user?: TokenPayload;
@@ -11,7 +10,6 @@ declare global {
   }
 }
 
-// Vérifie la présence et la validité du JWT (en-tête Authorization: Bearer <token>)
 export function authenticate(req: Request, _res: Response, next: NextFunction): void {
   const header = req.headers.authorization;
   if (!header || !header.startsWith("Bearer ")) {

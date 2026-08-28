@@ -3,18 +3,13 @@ import { attemptRepository } from "../repositories/attempt.repository";
 import { userRepository } from "../repositories/user.repository";
 import { ApiError } from "../middlewares/error.middleware";
 
-// 50% = réussite
 const PASS = 0.5;
 
 export const resultService = {
 
-  // ==========================
-  // ADMIN : résultats d'un examen
-  // ==========================
 
   async getExamResults(examId: number) {
 
-    // Vérifier que l'examen existe
     const exam = await examRepository.findById(examId);
 
     if (!exam) {
@@ -22,23 +17,19 @@ export const resultService = {
     }
 
 
-    // Récupérer les tentatives
     const attempts =
       await attemptRepository.findByExam(examId);
 
 
-    // Préparer les résultats
     const results = [];
 
     for (const attempt of attempts) {
 
-      // Chercher l'étudiant
       const student =
         await userRepository.findById(
           attempt.student_id
         );
 
-      // Calculer le pourcentage
       const percent =
         attempt.max_score > 0
           ? attempt.score / attempt.max_score
@@ -58,7 +49,6 @@ export const resultService = {
         score: Number(attempt.score),
         maxScore: Number(attempt.max_score),
 
-        // >= 50% = admis
         passed: percent >= PASS,
 
         submittedAt: attempt.submitted_at
@@ -76,13 +66,9 @@ export const resultService = {
   },
 
 
-  // ==========================
-  // ÉTUDIANT : mes résultats
-  // ==========================
 
   async getMyResults(studentId: number) {
 
-    // Récupérer les examens passés
     const attempts =
       await attemptRepository.findByStudent(
         studentId
@@ -93,14 +79,12 @@ export const resultService = {
 
     for (const attempt of attempts) {
 
-      // Chercher l'examen
       const exam =
         await examRepository.findById(
           attempt.exam_id
         );
 
 
-      // Calculer le pourcentage
       const percent =
         attempt.max_score > 0
           ? attempt.score / attempt.max_score
@@ -124,7 +108,6 @@ export const resultService = {
     }
 
 
-    // Calculer la moyenne
     let total = 0;
 
     for (const result of results) {

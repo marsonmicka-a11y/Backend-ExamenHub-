@@ -3,7 +3,6 @@ import { examController } from "../controllers/exam.controller";
 import { authenticate } from "../security/auth.middleware";
 import { requireRole } from "../security/role.middleware";
 
-// ================= ADMIN =================
 
 export const examAdminRouter = Router();
 
@@ -17,7 +16,6 @@ examAdminRouter.put("/:id", examController.update);
 examAdminRouter.delete("/:id", examController.remove);
 
 
-// ================= ÉTUDIANT =================
 
 export const examStudentRouter = Router();
 

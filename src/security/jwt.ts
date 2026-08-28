@@ -3,7 +3,7 @@ import { env } from "../config/env";
 import { UserRole } from "../models/user.model";
 
 export interface TokenPayload {
-  sub: number; // id de l'utilisateur
+  sub: number; 
   role: UserRole;
   email: string;
 }

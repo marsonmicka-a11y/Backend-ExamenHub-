@@ -5,7 +5,6 @@ import { toPublicUser } from "../models/user.model";
 
 export const studentService = {
 
-  // Voir tous les étudiants
   async listStudents() {
 
     const students =
@@ -15,10 +14,8 @@ export const studentService = {
   },
 
 
-  // Créer un étudiant
   async createStudent(data: any) {
 
-    // Vérifier les informations
     if (!data.email || !data.password || !data.fullName) {
       throw new ApiError(
         400,
@@ -26,7 +23,6 @@ export const studentService = {
       );
     }
 
-    // Vérifier si l'email existe déjà
     const existing =
       await userRepository.findByEmail(data.email);
 
@@ -38,12 +34,10 @@ export const studentService = {
     }
 
 
-    // Crypter le mot de passe
     const passwordHash =
       await bcrypt.hash(data.password, 10);
 
 
-    // Créer l'utilisateur
     const student =
       await userRepository.create({
         email: data.email,
@@ -53,15 +47,12 @@ export const studentService = {
       });
 
 
-    // Ne pas envoyer le mot de passe
     return toPublicUser(student);
   },
 
 
-  // Activer / désactiver un étudiant
   async setActive(id: number, active: boolean) {
 
-    // Chercher l'étudiant
     const student =
       await userRepository.findById(id);
 
@@ -73,7 +64,6 @@ export const studentService = {
     }
 
 
-    // Modifier active
     const updated =
       await userRepository.setActive(
         id,
@@ -84,7 +74,6 @@ export const studentService = {
   },
 
 
-  // Désactiver un étudiant
   async deactivate(id: number) {
 
     return this.setActive(id, false);
