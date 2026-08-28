@@ -16,7 +16,6 @@ interface SubmittedAnswer {
 }
 
 export const examService = {
-  // ---------- Administrateur ----------
 
   async listExams(): Promise<Exam[]> {
     return examRepository.findAll();
@@ -81,7 +80,6 @@ export const examService = {
     return updated;
   },
 
-  // RG-09 : un examen possédant des tentatives ne peut pas être supprimé.
   async deleteExam(id: number): Promise<void> {
     await this.getExam(id);
     const attemptCount = await examRepository.countAttempts(id);
@@ -94,15 +92,12 @@ export const examService = {
     await examRepository.delete(id);
   },
 
-  // ---------- Étudiant ----------
 
-  // Liste des examens non encore passés ET actuellement disponibles (RG-03).
   async listAvailableExamsForStudent(studentId: number): Promise<Exam[]> {
     return examRepository.findAvailableForStudent(studentId);
   },
 
-  // Page de passage d'examen : renvoie les questions SANS la bonne réponse (RG-07),
-  // uniquement si la fenêtre est ouverte (RG-03) et si l'étudiant n'a pas déjà répondu (RG-02).
+
   async getExamForStudent(
     studentId: number,
     examId: number
@@ -135,8 +130,6 @@ export const examService = {
     return { exam, questions: publicQuestions };
   },
 
-  // Soumission : notation exclusivement côté serveur (RG-06), à partir
-  // des seuls identifiants de choix transmis par le client.
   async submitExam(
     studentId: number,
     examId: number,
@@ -158,13 +151,11 @@ export const examService = {
     const exam = await examRepository.findById(examId);
     if (!exam) throw new ApiError(404, "Examen introuvable");
 
-    // RG-03 : revérifié aussi à la soumission, pas seulement à l'affichage.
     const now = new Date();
     if (now < exam.start_date || now > exam.end_date) {
       throw new ApiError(403, "La fenêtre de disponibilité de cet examen est fermée");
     }
 
-    // RG-02 : vérification côté serveur (en plus de la contrainte UNIQUE en base).
     const existingAttempt = await attemptRepository.findByStudentAndExam(studentId, examId);
     if (existingAttempt) {
       throw new ApiError(409, "Vous avez déjà passé cet examen");
@@ -205,7 +196,6 @@ export const examService = {
       const correctChoice = questionChoices.find((c) => c.is_correct)!;
       maxScore += Number(question.points);
 
-      // RG-05 : question non répondue = 0 point ; soumission partielle autorisée.
       const selectedChoiceId = answerByQuestion.has(question.id)
         ? answerByQuestion.get(question.id) ?? null
         : null;
