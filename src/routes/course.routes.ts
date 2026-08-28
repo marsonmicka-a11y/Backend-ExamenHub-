@@ -3,7 +3,6 @@ import { courseController } from "../controllers/course.controller";
 import { authenticate } from "../security/auth.middleware";
 import { requireRole } from "../security/role.middleware";
 
-// Administrateur uniquement.
 const router = Router();
 router.use(authenticate, requireRole("admin"));
 
