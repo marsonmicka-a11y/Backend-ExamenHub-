@@ -13,7 +13,7 @@ function getId(value: string): number {
 
 export const questionController = {
 
-  // Voir les questions d'un examen
+  
   async listForExam(req: Request, res: Response): Promise<void> {
 
     const examId = getId(req.params.id);
@@ -24,8 +24,7 @@ export const questionController = {
     res.status(200).json(questions);
   },
 
-
-  // Créer une question
+  
   async createForExam(req: Request, res: Response): Promise<void> {
 
     const examId = getId(req.params.id);
@@ -46,7 +45,7 @@ export const questionController = {
   },
 
 
-  // Modifier une question
+  
   async update(req: Request, res: Response): Promise<void> {
 
     const id = getId(req.params.id);
@@ -66,7 +65,7 @@ export const questionController = {
   },
 
 
-  // Supprimer une question
+  
   async remove(req: Request, res: Response): Promise<void> {
 
     const id = getId(req.params.id);
