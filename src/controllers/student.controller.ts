@@ -13,7 +13,6 @@ function getId(value: string): number {
 
 export const studentController = {
 
-  // Voir tous les étudiants
   async list(req: Request, res: Response): Promise<void> {
 
     const students = await studentService.listStudents();
@@ -22,7 +21,6 @@ export const studentController = {
   },
 
 
-  // Créer un étudiant
   async create(req: Request, res: Response): Promise<void> {
 
     const email = req.body.email;
@@ -39,7 +37,7 @@ export const studentController = {
   },
 
 
-  // Activer / désactiver un étudiant
+  
   async update(req: Request, res: Response): Promise<void> {
 
     const id = getId(req.params.id);
@@ -55,7 +53,7 @@ export const studentController = {
   },
 
 
-  // Désactiver un étudiant
+  
   async remove(req: Request, res: Response): Promise<void> {
 
     const id = getId(req.params.id);
