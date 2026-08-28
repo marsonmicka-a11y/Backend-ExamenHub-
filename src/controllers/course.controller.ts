@@ -13,14 +13,14 @@ function getId(value: string): number {
 
 export const courseController = {
 
-  // GET /courses
+  
   async list(req: Request, res: Response): Promise<void> {
     const courses = await courseService.listCourses();
 
     res.status(200).json(courses);
   },
 
-  // POST /courses
+  
   async create(req: Request, res: Response): Promise<void> {
     const code = req.body.code;
     const name = req.body.name;
@@ -35,7 +35,7 @@ export const courseController = {
     res.status(201).json(course);
   },
 
-  // PUT /courses/:id
+  
   async update(req: Request, res: Response): Promise<void> {
     const id = getId(req.params.id);
 
@@ -52,7 +52,7 @@ export const courseController = {
     res.status(200).json(course);
   },
 
-  // DELETE /courses/:id
+  
   async remove(req: Request, res: Response): Promise<void> {
     const id = getId(req.params.id);
 
