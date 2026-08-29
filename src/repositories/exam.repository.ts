@@ -60,8 +60,7 @@ export const examRepository = {
     return Number(result.rows[0].count);
   },
 
-  // RG-03 : examens dont la fenêtre est ouverte MAINTENANT, et que
-  // l'étudiant n'a pas encore passés.
+
   async findAvailableForStudent(studentId: number, db: Queryable = pool): Promise<Exam[]> {
     const result = await db.query<Exam>(
       `SELECT e.* FROM exams e
