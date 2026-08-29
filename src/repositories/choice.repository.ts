@@ -3,7 +3,6 @@ import { Choice } from "../models/choice.model";
 
 export const choiceRepository = {
 
-  // Trouver les choix d'une question
   async findByQuestion(
     questionId: number,
     db: Queryable = pool
@@ -18,7 +17,6 @@ export const choiceRepository = {
   },
 
 
-  // Trouver les choix de plusieurs questions
   async findByQuestions(
     questionIds: number[],
     db: Queryable = pool
@@ -37,7 +35,6 @@ export const choiceRepository = {
   },
 
 
-  // Trouver un choix par son ID
   async findById(
     id: number,
     db: Queryable = pool
@@ -52,7 +49,6 @@ export const choiceRepository = {
   },
 
 
-  // Créer plusieurs choix
   async createMany(
     questionId: number,
     choices: {
@@ -85,7 +81,6 @@ export const choiceRepository = {
   },
 
 
-  // Supprimer les choix d'une question
   async deleteByQuestion(
     questionId: number,
     db: Queryable = pool
