@@ -10,7 +10,6 @@ export interface User {
   created_at: Date;
 }
 
-// Version sans password_hash, sûre à renvoyer au client.
 export interface PublicUser {
   id: number;
   email: string;
