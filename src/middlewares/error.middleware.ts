@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-// Notre propre type d'erreur
+
 export class ApiError extends Error {
 
   status: number;
@@ -12,7 +12,6 @@ export class ApiError extends Error {
 }
 
 
-// Middleware qui gère les erreurs
 export function errorMiddleware(
   err: unknown,
   req: Request,
@@ -20,7 +19,6 @@ export function errorMiddleware(
   next: NextFunction
 ): void {
 
-  // Erreur créée par notre application
   if (err instanceof ApiError) {
 
     res.status(err.status).json({
@@ -31,7 +29,6 @@ export function errorMiddleware(
   }
 
 
-  // Erreur PostgreSQL : donnée déjà existante
   if ((err as any).code === "23505") {
 
     res.status(409).json({
@@ -42,7 +39,6 @@ export function errorMiddleware(
   }
 
 
-  // Erreur PostgreSQL : problème de relation
   if ((err as any).code === "23503") {
 
     res.status(409).json({
@@ -53,7 +49,6 @@ export function errorMiddleware(
   }
 
 
-  // Erreur inconnue
   console.error(err);
 
   res.status(500).json({
