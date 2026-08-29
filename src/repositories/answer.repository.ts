@@ -3,7 +3,6 @@ import { AttemptAnswer } from "../models/answer.model";
 
 export const answerRepository = {
 
-  // Trouver les réponses d'une tentative
   async findByAttempt(
     attemptId: number,
     db: Queryable = pool
@@ -18,7 +17,6 @@ export const answerRepository = {
   },
 
 
-  // Créer plusieurs réponses
   async createMany(
     attemptId: number,
     answers: {
