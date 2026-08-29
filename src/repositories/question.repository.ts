@@ -1,9 +1,7 @@
 import { pool, Queryable } from "../database/connection";
 import { Question } from "../models/question.model";
 
-// Ne gère QUE la table `questions`. La gestion des choix associés
-// est déléguée à choice.repository.ts ; c'est la couche service
-// (question.service.ts) qui orchestre les deux dans une transaction.
+
 export const questionRepository = {
   async findByExam(examId: number, db: Queryable = pool): Promise<Question[]> {
     const result = await db.query<Question>(
