@@ -3,7 +3,6 @@ import { Course } from "../models/course.model";
 
 export const courseRepository = {
 
-  // Trouver tous les cours
   async findAll(db: Queryable = pool): Promise<Course[]> {
 
     const result = await db.query(
@@ -14,7 +13,6 @@ export const courseRepository = {
   },
 
 
-  // Trouver un cours par son ID
   async findById(
     id: number,
     db: Queryable = pool
@@ -29,7 +27,6 @@ export const courseRepository = {
   },
 
 
-  // Trouver un cours par son code
   async findByCode(
     code: string,
     db: Queryable = pool
@@ -44,7 +41,6 @@ export const courseRepository = {
   },
 
 
-  // Créer un cours
   async create(
     params: {
       code: string;
@@ -70,7 +66,6 @@ export const courseRepository = {
   },
 
 
-  // Modifier un cours
   async update(
     id: number,
     params: {
@@ -100,7 +95,6 @@ export const courseRepository = {
   },
 
 
-  // Supprimer un cours
   async delete(
     id: number,
     db: Queryable = pool
@@ -113,7 +107,6 @@ export const courseRepository = {
   },
 
 
-  // Compter les examens d'un cours
   async countExams(
     id: number,
     db: Queryable = pool
