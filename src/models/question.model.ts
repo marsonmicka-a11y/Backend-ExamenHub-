@@ -12,7 +12,6 @@ export interface QuestionWithChoices extends Question {
   choices: Choice[];
 }
 
-// Question telle qu'envoyée à un étudiant pendant l'examen (RG-07).
 export interface PublicQuestion {
   id: number;
   statement: string;
