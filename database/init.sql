@@ -71,6 +71,5 @@ CREATE INDEX IF NOT EXISTS idx_attempts_student_id ON attempts(student_id);
 
 
 
--- Nécessaire pour que seed.sql puisse hacher le mot de passe admin
--- avec un algorithme compatible bcrypt (crypt/gen_salt('bf')).
+
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
