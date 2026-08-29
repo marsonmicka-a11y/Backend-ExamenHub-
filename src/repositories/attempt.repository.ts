@@ -3,7 +3,6 @@ import { Attempt } from "../models/attempt.model";
 
 export const attemptRepository = {
 
-  // Trouver la tentative d'un étudiant pour un examen
   async findByStudentAndExam(
     studentId: number,
     examId: number,
@@ -19,7 +18,6 @@ export const attemptRepository = {
   },
 
 
-  // Trouver une tentative par son ID
   async findById(
     id: number,
     db: Queryable = pool
@@ -34,7 +32,6 @@ export const attemptRepository = {
   },
 
 
-  // Trouver toutes les tentatives d'un examen
   async findByExam(
     examId: number,
     db: Queryable = pool
@@ -49,7 +46,6 @@ export const attemptRepository = {
   },
 
 
-  // Trouver toutes les tentatives d'un étudiant
   async findByStudent(
     studentId: number,
     db: Queryable = pool
@@ -64,7 +60,6 @@ export const attemptRepository = {
   },
 
 
-  // Créer une tentative
   async create(
     params: {
       studentId: number;
